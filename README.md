@@ -114,3 +114,14 @@ Versi ini sudah diperbaiki agar mudah dibaca pada tema light dan dark/night:
 - metric, tabel, code block, sidebar, dan footer memiliki border kontras adaptif;
 - footer custom tetap terbaca di light maupun dark mode;
 - hero/header tidak lagi memakai warna latar terang permanen.
+
+
+## Fix Keterbacaan Dark/Light
+
+Versi ini memperbaiki masalah tulisan tidak terbaca pada dark mode dengan cara:
+
+- menghapus override global warna teks;
+- membiarkan komponen bawaan Streamlit mengikuti tema bawaan;
+- membuat elemen custom seperti hero dan footer memakai warna eksplisit high-contrast;
+- memastikan teks pada hero, card, dan footer selalu terang di atas background gelap;
+- mempertahankan border lembut pada metric dan dataframe tanpa memaksa warna teks.

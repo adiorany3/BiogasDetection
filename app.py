@@ -146,11 +146,13 @@ def inject_custom_css():
         """
         <style>
             /*
-                Theme-ready design.
-                Streamlit exposes CSS variables such as:
-                --background-color, --secondary-background-color,
-                --text-color, --primary-color.
-                These variables automatically adapt to light and dark mode.
+                Readable design for both Streamlit light and dark themes.
+
+                Prinsip perbaikan:
+                1. Jangan override warna teks global Streamlit.
+                2. Biarkan komponen bawaan Streamlit mengikuti tema bawaan.
+                3. Elemen custom seperti hero dan footer memakai warna eksplisit
+                   dengan kontras tinggi agar tetap terbaca pada light/dark.
             */
 
             #MainMenu {
@@ -183,195 +185,159 @@ def inject_custom_css():
                 position: fixed;
             }
 
-            :root {
-                --app-card-radius: 1rem;
-                --app-border-soft: rgba(128, 128, 128, 0.28);
-                --app-shadow-soft: 0 8px 26px rgba(15, 23, 42, 0.08);
-            }
-
-            html,
-            body,
-            [class*="css"] {
-                color: var(--text-color);
-            }
-
-            .stApp {
-                background: var(--background-color);
-                color: var(--text-color);
-            }
-
             .block-container {
                 padding-top: 1.25rem;
-                padding-bottom: 6rem;
+                padding-bottom: 6.25rem;
                 max-width: 1280px;
             }
 
-            section[data-testid="stSidebar"] {
-                background: var(--secondary-background-color);
-                border-right: 1px solid var(--app-border-soft);
-            }
-
-            section[data-testid="stSidebar"] * {
-                color: var(--text-color);
-            }
-
-            h1, h2, h3, h4, h5, h6,
-            p, span, label, div {
-                color: inherit;
-            }
-
-            a {
-                color: var(--primary-color);
-                font-weight: 650;
-                text-decoration: none;
-            }
-
-            a:hover {
-                text-decoration: underline;
-            }
-
+            /*
+                Hero dibuat selalu gelap dengan teks terang.
+                Ini sengaja dibuat eksplisit agar tidak bentrok dengan mode dark.
+            */
             .hero-box {
                 padding: 1.35rem 1.5rem;
-                border-radius: var(--app-card-radius);
-                background:
-                    linear-gradient(
-                        135deg,
-                        color-mix(in srgb, var(--primary-color) 12%, var(--secondary-background-color)),
-                        var(--secondary-background-color)
-                    );
-                border: 1px solid var(--app-border-soft);
-                color: var(--text-color);
+                border-radius: 1rem;
+                background: #0f172a;
+                border: 1px solid #334155;
+                color: #f8fafc !important;
                 margin-bottom: 1rem;
-                box-shadow: var(--app-shadow-soft);
+                box-shadow: 0 8px 26px rgba(0, 0, 0, 0.22);
             }
 
+            .hero-box,
             .hero-box h1,
-            .hero-box p {
-                color: var(--text-color) !important;
+            .hero-box h2,
+            .hero-box h3,
+            .hero-box p,
+            .hero-box span,
+            .hero-box div,
+            .hero-box strong {
+                color: #f8fafc !important;
             }
 
             .hero-box h1 {
+                margin-top: 0;
+                margin-bottom: 0.45rem;
                 line-height: 1.2;
                 font-size: clamp(1.75rem, 2.4vw, 2.6rem);
                 letter-spacing: -0.02em;
+                font-weight: 800;
             }
 
             .hero-box p {
+                margin-bottom: 0;
                 line-height: 1.65;
                 font-size: 1.02rem;
-                opacity: 0.92;
+                color: #e2e8f0 !important;
             }
 
+            /*
+                Card custom, jika dipakai, juga dibuat high-contrast.
+            */
             .info-card {
                 padding: 1rem;
                 border-radius: 0.9rem;
-                border: 1px solid var(--app-border-soft);
-                background: var(--secondary-background-color);
-                color: var(--text-color);
+                border: 1px solid #334155;
+                background: #111827;
+                color: #f9fafb !important;
                 margin-bottom: 0.75rem;
-                box-shadow: var(--app-shadow-soft);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+            }
+
+            .info-card,
+            .info-card p,
+            .info-card span,
+            .info-card div,
+            .info-card strong {
+                color: #f9fafb !important;
             }
 
             .small-muted {
-                color: color-mix(in srgb, var(--text-color) 72%, transparent);
+                color: #cbd5e1 !important;
                 font-size: 0.9rem;
             }
 
+            /*
+                Komponen Streamlit bawaan tidak dipaksa warna teksnya.
+                Cukup diberi border lembut agar tetap terbaca di light/dark.
+            */
             div[data-testid="stMetric"] {
-                background: var(--secondary-background-color);
-                border: 1px solid var(--app-border-soft);
+                border: 1px solid rgba(148, 163, 184, 0.35);
                 border-radius: 0.85rem;
                 padding: 0.85rem 1rem;
-                box-shadow: var(--app-shadow-soft);
-            }
-
-            div[data-testid="stMetric"] label,
-            div[data-testid="stMetric"] [data-testid="stMetricLabel"],
-            div[data-testid="stMetric"] [data-testid="stMetricValue"] {
-                color: var(--text-color) !important;
             }
 
             .stDataFrame,
             div[data-testid="stDataFrame"] {
-                border: 1px solid var(--app-border-soft);
+                border: 1px solid rgba(148, 163, 184, 0.35);
                 border-radius: 0.85rem;
                 overflow: hidden;
-                background: var(--secondary-background-color);
-            }
-
-            div[data-testid="stMarkdownContainer"] code {
-                color: var(--text-color);
-                background: color-mix(in srgb, var(--secondary-background-color) 86%, var(--primary-color));
-                border: 1px solid var(--app-border-soft);
-                border-radius: 0.35rem;
-                padding: 0.1rem 0.25rem;
-            }
-
-            pre,
-            code,
-            .stCodeBlock {
-                color: var(--text-color) !important;
             }
 
             .stAlert {
                 border-radius: 0.85rem;
-                border: 1px solid var(--app-border-soft);
             }
 
-            div[data-baseweb="select"] > div,
-            div[data-baseweb="input"] > div,
-            div[data-baseweb="textarea"] > div {
-                background: var(--secondary-background-color);
-                color: var(--text-color);
-                border-color: var(--app-border-soft);
-            }
-
-            input,
-            textarea {
-                color: var(--text-color) !important;
-            }
-
+            /*
+                Footer dibuat selalu gelap dengan teks terang agar terbaca
+                pada tema light maupun dark.
+            */
             .custom-footer {
                 position: fixed;
                 left: 0;
                 bottom: 0;
                 width: 100%;
-                background:
-                    color-mix(in srgb, var(--secondary-background-color) 96%, var(--primary-color));
-                color: var(--text-color);
+                background: #0f172a;
+                color: #f8fafc !important;
                 text-align: center;
                 padding: 0.72rem 1rem;
                 font-size: 0.86rem;
                 line-height: 1.35;
                 z-index: 999999;
-                border-top: 1px solid var(--app-border-soft);
-                box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.12);
+                border-top: 1px solid #334155;
+                box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.22);
             }
 
+            .custom-footer,
             .custom-footer strong {
-                color: var(--text-color);
-                font-weight: 750;
+                color: #f8fafc !important;
             }
 
             .custom-footer a {
-                color: var(--primary-color);
+                color: #93c5fd !important;
                 text-decoration: none;
                 font-weight: 700;
             }
 
             .custom-footer a:hover {
+                color: #bfdbfe !important;
                 text-decoration: underline;
             }
 
+            /*
+                Link dalam markdown tetap mengikuti Streamlit kecuali footer.
+            */
+            div[data-testid="stMarkdownContainer"] a:not(.custom-footer a) {
+                font-weight: 650;
+            }
+
+            /*
+                Perbaikan mobile.
+            */
             @media (max-width: 768px) {
                 .block-container {
                     padding-left: 1rem;
                     padding-right: 1rem;
-                    padding-bottom: 7rem;
+                    padding-bottom: 7.25rem;
                 }
 
                 .hero-box {
                     padding: 1rem;
+                }
+
+                .hero-box h1 {
+                    font-size: 1.65rem;
                 }
 
                 .custom-footer {
@@ -379,26 +345,10 @@ def inject_custom_css():
                     padding: 0.62rem 0.75rem;
                 }
             }
-
-            @supports not (color: color-mix(in srgb, white, black)) {
-                .hero-box,
-                .info-card,
-                div[data-testid="stMetric"],
-                .custom-footer {
-                    background: var(--secondary-background-color);
-                    color: var(--text-color);
-                }
-
-                .small-muted {
-                    opacity: 0.76;
-                    color: var(--text-color);
-                }
-            }
         </style>
         """,
         unsafe_allow_html=True
     )
-
 
 def render_footer():
     st.markdown(
