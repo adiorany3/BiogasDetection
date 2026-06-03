@@ -145,6 +145,14 @@ def inject_custom_css():
     st.markdown(
         """
         <style>
+            /*
+                Theme-ready design.
+                Streamlit exposes CSS variables such as:
+                --background-color, --secondary-background-color,
+                --text-color, --primary-color.
+                These variables automatically adapt to light and dark mode.
+            */
+
             #MainMenu {
                 visibility: hidden;
             }
@@ -175,9 +183,152 @@ def inject_custom_css():
                 position: fixed;
             }
 
+            :root {
+                --app-card-radius: 1rem;
+                --app-border-soft: rgba(128, 128, 128, 0.28);
+                --app-shadow-soft: 0 8px 26px rgba(15, 23, 42, 0.08);
+            }
+
+            html,
+            body,
+            [class*="css"] {
+                color: var(--text-color);
+            }
+
+            .stApp {
+                background: var(--background-color);
+                color: var(--text-color);
+            }
+
             .block-container {
-                padding-top: 1.5rem;
-                padding-bottom: 5rem;
+                padding-top: 1.25rem;
+                padding-bottom: 6rem;
+                max-width: 1280px;
+            }
+
+            section[data-testid="stSidebar"] {
+                background: var(--secondary-background-color);
+                border-right: 1px solid var(--app-border-soft);
+            }
+
+            section[data-testid="stSidebar"] * {
+                color: var(--text-color);
+            }
+
+            h1, h2, h3, h4, h5, h6,
+            p, span, label, div {
+                color: inherit;
+            }
+
+            a {
+                color: var(--primary-color);
+                font-weight: 650;
+                text-decoration: none;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+            .hero-box {
+                padding: 1.35rem 1.5rem;
+                border-radius: var(--app-card-radius);
+                background:
+                    linear-gradient(
+                        135deg,
+                        color-mix(in srgb, var(--primary-color) 12%, var(--secondary-background-color)),
+                        var(--secondary-background-color)
+                    );
+                border: 1px solid var(--app-border-soft);
+                color: var(--text-color);
+                margin-bottom: 1rem;
+                box-shadow: var(--app-shadow-soft);
+            }
+
+            .hero-box h1,
+            .hero-box p {
+                color: var(--text-color) !important;
+            }
+
+            .hero-box h1 {
+                line-height: 1.2;
+                font-size: clamp(1.75rem, 2.4vw, 2.6rem);
+                letter-spacing: -0.02em;
+            }
+
+            .hero-box p {
+                line-height: 1.65;
+                font-size: 1.02rem;
+                opacity: 0.92;
+            }
+
+            .info-card {
+                padding: 1rem;
+                border-radius: 0.9rem;
+                border: 1px solid var(--app-border-soft);
+                background: var(--secondary-background-color);
+                color: var(--text-color);
+                margin-bottom: 0.75rem;
+                box-shadow: var(--app-shadow-soft);
+            }
+
+            .small-muted {
+                color: color-mix(in srgb, var(--text-color) 72%, transparent);
+                font-size: 0.9rem;
+            }
+
+            div[data-testid="stMetric"] {
+                background: var(--secondary-background-color);
+                border: 1px solid var(--app-border-soft);
+                border-radius: 0.85rem;
+                padding: 0.85rem 1rem;
+                box-shadow: var(--app-shadow-soft);
+            }
+
+            div[data-testid="stMetric"] label,
+            div[data-testid="stMetric"] [data-testid="stMetricLabel"],
+            div[data-testid="stMetric"] [data-testid="stMetricValue"] {
+                color: var(--text-color) !important;
+            }
+
+            .stDataFrame,
+            div[data-testid="stDataFrame"] {
+                border: 1px solid var(--app-border-soft);
+                border-radius: 0.85rem;
+                overflow: hidden;
+                background: var(--secondary-background-color);
+            }
+
+            div[data-testid="stMarkdownContainer"] code {
+                color: var(--text-color);
+                background: color-mix(in srgb, var(--secondary-background-color) 86%, var(--primary-color));
+                border: 1px solid var(--app-border-soft);
+                border-radius: 0.35rem;
+                padding: 0.1rem 0.25rem;
+            }
+
+            pre,
+            code,
+            .stCodeBlock {
+                color: var(--text-color) !important;
+            }
+
+            .stAlert {
+                border-radius: 0.85rem;
+                border: 1px solid var(--app-border-soft);
+            }
+
+            div[data-baseweb="select"] > div,
+            div[data-baseweb="input"] > div,
+            div[data-baseweb="textarea"] > div {
+                background: var(--secondary-background-color);
+                color: var(--text-color);
+                border-color: var(--app-border-soft);
+            }
+
+            input,
+            textarea {
+                color: var(--text-color) !important;
             }
 
             .custom-footer {
@@ -185,44 +336,63 @@ def inject_custom_css():
                 left: 0;
                 bottom: 0;
                 width: 100%;
-                background: #0f172a;
-                color: #e5e7eb;
+                background:
+                    color-mix(in srgb, var(--secondary-background-color) 96%, var(--primary-color));
+                color: var(--text-color);
                 text-align: center;
-                padding: 0.65rem 1rem;
-                font-size: 0.85rem;
+                padding: 0.72rem 1rem;
+                font-size: 0.86rem;
+                line-height: 1.35;
                 z-index: 999999;
-                border-top: 1px solid rgba(255, 255, 255, 0.12);
+                border-top: 1px solid var(--app-border-soft);
+                box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.12);
+            }
+
+            .custom-footer strong {
+                color: var(--text-color);
+                font-weight: 750;
             }
 
             .custom-footer a {
-                color: #93c5fd;
+                color: var(--primary-color);
                 text-decoration: none;
-                font-weight: 600;
+                font-weight: 700;
             }
 
             .custom-footer a:hover {
                 text-decoration: underline;
             }
 
-            .hero-box {
-                padding: 1.25rem 1.5rem;
-                border-radius: 1rem;
-                background: linear-gradient(135deg, #ecfdf5 0%, #eff6ff 100%);
-                border: 1px solid #d1fae5;
-                margin-bottom: 1rem;
+            @media (max-width: 768px) {
+                .block-container {
+                    padding-left: 1rem;
+                    padding-right: 1rem;
+                    padding-bottom: 7rem;
+                }
+
+                .hero-box {
+                    padding: 1rem;
+                }
+
+                .custom-footer {
+                    font-size: 0.76rem;
+                    padding: 0.62rem 0.75rem;
+                }
             }
 
-            .info-card {
-                padding: 1rem;
-                border-radius: 0.8rem;
-                border: 1px solid #e5e7eb;
-                background: #ffffff;
-                margin-bottom: 0.75rem;
-            }
+            @supports not (color: color-mix(in srgb, white, black)) {
+                .hero-box,
+                .info-card,
+                div[data-testid="stMetric"],
+                .custom-footer {
+                    background: var(--secondary-background-color);
+                    color: var(--text-color);
+                }
 
-            .small-muted {
-                color: #64748b;
-                font-size: 0.9rem;
+                .small-muted {
+                    opacity: 0.76;
+                    color: var(--text-color);
+                }
             }
         </style>
         """,
@@ -860,8 +1030,8 @@ test_size = st.sidebar.slider(
 st.markdown(
     """
     <div class="hero-box">
-        <h1 style="margin-bottom: 0.25rem;">🐄 Prediksi Produksi Biogas Sapi Perah Indonesia</h1>
-        <p style="margin-bottom: 0;">
+        <h1>🐄 Prediksi Produksi Biogas Sapi Perah Indonesia</h1>
+        <p>
             Aplikasi ini difokuskan untuk estimasi produksi biogas dari populasi sapi perah di Indonesia.
             Model machine learning dilatih dari data Kaggle/AGSTAR khusus dairy sebagai baseline, lalu
             dikombinasikan dengan parameter lokal Indonesia seperti produksi kotoran, tingkat pengumpulan,
@@ -1531,6 +1701,12 @@ elif page == "Metodologi":
         Karena data Kaggle/AGSTAR bukan data Indonesia murni. Bobot memungkinkan pengguna
         menentukan seberapa besar aplikasi mengikuti pola data internasional dan seberapa besar
         mengikuti asumsi lokal Indonesia.
+
+
+        ### Desain light/dark mode
+
+        Tampilan aplikasi menggunakan warna adaptif dari tema Streamlit, sehingga elemen seperti
+        card, metric, sidebar, tabel, kode, link, dan footer tetap terbaca pada tema terang maupun gelap.
 
         ### Batasan
 

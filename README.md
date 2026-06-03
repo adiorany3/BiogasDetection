@@ -102,3 +102,15 @@ Biogas lokal =
 
 Data Kaggle/AGSTAR digunakan sebagai baseline internasional. Untuk hasil paling akurat,
 parameter lokal sebaiknya dikalibrasi dengan data lapangan peternakan sapi perah di Indonesia.
+
+
+## Perbaikan Desain Theme-Ready
+
+Versi ini sudah diperbaiki agar mudah dibaca pada tema light dan dark/night:
+
+- warna card mengikuti `--secondary-background-color`;
+- warna teks mengikuti `--text-color`;
+- warna link mengikuti `--primary-color`;
+- metric, tabel, code block, sidebar, dan footer memiliki border kontras adaptif;
+- footer custom tetap terbaca di light maupun dark mode;
+- hero/header tidak lagi memakai warna latar terang permanen.
